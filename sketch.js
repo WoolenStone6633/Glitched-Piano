@@ -154,8 +154,47 @@ let glitch;
 let arrayX;
 let arrayY;
 
+let cnv;
+
+function centerCanvas() {
+  var x = (windowWidth - width) / 2;
+  cnv.position(x);
+}
+
+function adjustButtons() {
+  let visualizer_1XModifier = visualizerOff.width * 2;
+  let visualizer_2XModifier = visualizer_1XModifier + visualizer_1.width * 2;
+  let visualizer_3XModifier = visualizer_2XModifier + visualizer_2.width * 2;
+  let visualizer_4XModifier = visualizer_3XModifier + visualizer_3.width * 2;
+  let muteButXModifier = visualizer_4XModifier + visualizer_4.width * 2;
+  let recordButXModifier = muteButXModifier + muteBut.width * 2;
+  let playButXModifier = recordButXModifier + recordBut.width * 2;
+
+  visualizerOff.position((windowWidth - width)/ 2, height);
+  visualizer_1.position((windowWidth - width + visualizer_1XModifier)/ 2, height);
+  visualizer_2.position((windowWidth - width + visualizer_2XModifier)/ 2, height);
+  visualizer_3.position((windowWidth - width + visualizer_3XModifier)/ 2, height);
+  visualizer_4.position((windowWidth - width + visualizer_4XModifier)/ 2, height);
+  muteBut.position((windowWidth - width + muteButXModifier)/ 2, height);
+  recordBut.position((windowWidth - width + recordButXModifier)/ 2, height);
+  playBut.position((windowWidth - width + playButXModifier)/ 2, height)
+}
+
+function buttonWidthReset() {
+  visualizerOff.width = 95;
+  visualizer_1.width = 85;
+  visualizer_2.width = 85;
+  visualizer_3.width = 85;
+  if (!recording) {
+    recordBut.width = 59;
+  } else {
+    recordBut.width = 108;
+  }
+}
+
 function setup() {
-  createCanvas(1000, 550);
+  cnv = createCanvas(1000, 550);
+  centerCanvas();
   
   fft1 = new p5.FFT(0.8, 512);
   fft2 = new p5.FFT(1, 512);
@@ -169,6 +208,7 @@ function setup() {
   colorArray = [];
   randomX = [];
   randomY = [];
+
   visualizerOff = createButton("Visualizer Off");
   visualizerOff.mousePressed(controllerFunc0);
   visualizer_1 = createButton("Visualizer 1");
@@ -185,6 +225,7 @@ function setup() {
   recordBut.mousePressed(recordFunc);
   playBut = createButton("Play").hide();
   playBut.mousePressed(playFunc);
+  adjustButtons();
   
   glitch = false;
   recording = false;
@@ -196,6 +237,11 @@ function setup() {
   randomColorArray(colorArray);
   randomXfunc(randomX);
   randomYfunc(randomY);
+}
+
+function windowResized() {
+  centerCanvas();
+  adjustButtons();
 }
 
 function draw() {
@@ -341,10 +387,14 @@ function recordFunc() {
       recorder.record(soundFile);
       recording = true;
       recordBut.html("Stop Recording");
+      recordBut.width = 108
+      adjustButtons();
     } else {
       recorder.stop();
       recording = false;
       recordBut.html("Record");
+      recordBut.width = 59;
+      adjustButtons();
       playBut.show();
     }
   }
@@ -355,10 +405,14 @@ function playFunc() {
     if (play == false) {
       soundFile.play();
       playBut.html("Pause");
+      playBut.width = 54;
+      adjustButtons();
       play = true;
     } else {
       soundFile.pause();
       playBut.html("Play");
+      playBut.width = 42;
+      adjustButtons();
       play = false;
     }
   }
@@ -371,11 +425,14 @@ function muteFunc() {
       masterVolume(0);
       volume = 0;
       muteBut.html("Un-Mute");
+      muteBut.width = 67;
     } else {
       masterVolume(1);
       volume = 100;
       muteBut.html("Mute");
+      muteBut.width = 46;
     }
+    adjustButtons();
   }
 }
 
@@ -883,23 +940,37 @@ function randomYfunc(array) {
 function controllerFunc0() {
   glitch = false;
   controller = 0;
+  buttonWidthReset();
+  adjustButtons();
 }
 
 function controllerFunc1() {
   controller = 1;
+  buttonWidthReset();
+  adjustButtons();
 }
 
 function controllerFunc2() {
   controller = 2;
+  buttonWidthReset();
+  adjustButtons();
 }
 
 function controllerFunc3() {
   controller = 3;
   num = 10;
+  buttonWidthReset();
+  adjustButtons();
 }
 
 function controllerFunc4() {
   controller = 4;
+  visualizerOff.width = 96;
+  visualizer_1.width = 86;
+  visualizer_2.width = 86;
+  visualizer_3.width = 86;
+  recordBut.width = 25;
+  adjustButtons();
 }
 
 function keyboardText() {
