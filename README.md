@@ -1,5 +1,5 @@
 # Glitched Piano
-Based on a regular piano. Has a couple of visualizers, along with a couple of different glitches. If you see a glitched-out button, don't click it. Check the deployment section for the link.
+Based on a regular piano. Has a couple of visualizers, along with a couple of different glitches. If you see a glitched-out button, don't click it. $\color{blue}Check \ the \ deployment \ section \ for \ the \ link.$
 
 ## Features
 - Multiple visualizers
