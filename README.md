@@ -1,8 +1,6 @@
 # Glitched Piano
 Based on a regular piano. Has a couple of visualizers, along with a couple of different glitches. If you see a glitched-out button, don't click it.
 
-Check it out here: https://woolenstone6633.github.io/Glitched-Piano/
-
 ## Features
 - Multiple visualizers
 - 3.5 octave piano
